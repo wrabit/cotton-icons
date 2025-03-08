@@ -135,9 +135,8 @@ def generate_cotton_components(heroicons_dir, output_dir):
 
 
 if __name__ == "__main__":
-    # Update these paths as needed
     heroicons_dir = "heroicons/optimized"
-    output_dir = "django_cotton_heroicons/templates/cotton/heroicon"
+    output_dir = "cotton_icons/templates/cotton/heroicon"
 
     # Download heroicons repository
     if not download_heroicons_repo():
