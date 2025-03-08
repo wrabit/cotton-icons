@@ -9,9 +9,9 @@ description = "Icons integration for django-cotton, starting with Heroicons"
 authors = ["William Abbott <willabb83@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/wrabit/django-cotton-heroicons"
-repository = "https://github.com/wrabit/django-cotton-heroicons"
-documentation = "https://github.com/wrabit/django-cotton-heroicons#readme"
+homepage = "https://github.com/wrabit/cotton-icons"
+repository = "https://github.com/wrabit/cotton-icons"
+documentation = "https://github.com/wrabit/cotton-icons#readme"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
