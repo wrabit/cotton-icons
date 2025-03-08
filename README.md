@@ -1,4 +1,4 @@
-A package to provide popular icon packs for use with [Django Cotton](https://github.com/wrabit/django-cotton). For now, Heroicons is supported [heroicons](https://heroicons.com/).
+A package to provide popular icon packs for use with [Django Cotton](https://github.com/wrabit/django-cotton). For now, [Heroicons](https://heroicons.com/) is supported.
 
 ## Install
 
