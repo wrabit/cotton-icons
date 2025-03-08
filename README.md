@@ -13,7 +13,7 @@ pip install django-icons
 ```python
 # settings.py
 INSTALLED_APPS = [
-  'django-icons'
+  'django_icons'
 ]
 ```
 
