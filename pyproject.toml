@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "cotton-icons"
-version = "0.0.1"
+version = "0.0.2"
 description = "Icons integration for django-cotton, starting with Heroicons"
 authors = ["William Abbott <willabb83@gmail.com>"]
 license = "MIT"
