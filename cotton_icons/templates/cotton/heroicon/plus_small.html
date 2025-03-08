@@ -1,0 +1,20 @@
+<c-vars variant="outline" stroke_width="1.5" stroke_linecap="round" stroke_linejoin="round" />
+
+{% if variant == 'outline' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 6v12m6-6H6" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'solid' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill-rule="evenodd"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'mini' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.75 6.75a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"></path>
+</svg>
+{% endif %}
+

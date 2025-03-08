@@ -1,0 +1,26 @@
+<c-vars variant="outline" stroke_width="1.5" stroke_linecap="round" stroke_linejoin="round" />
+
+{% if variant == 'outline' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="none" stroke="currentColor" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'solid' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 0 1 .75.75v11.25a.75.75 0 0 1-1.5 0V6.31L5.03 20.03a.75.75 0 0 1-1.06-1.06L17.69 5.25H8.25a.75.75 0 0 1 0-1.5Z" fill-rule="evenodd"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'mini' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" fill-rule="evenodd"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'micro' %}
+<svg aria-hidden="true" {{ attrs }} data-slot="icon" fill="currentColor" viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M4.22 11.78a.75.75 0 0 1 0-1.06L9.44 5.5H5.75a.75.75 0 0 1 0-1.5h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V6.56l-5.22 5.22a.75.75 0 0 1-1.06 0Z" fill-rule="evenodd"></path>
+</svg>
+{% endif %}
+

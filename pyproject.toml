@@ -1,0 +1,52 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "cotton-icons"
+version = "0.0.1"
+description = "Icons integration for django-cotton, starting with Heroicons"
+authors = ["William Abbott <willabb83@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/wrabit/django-cotton-heroicons"
+repository = "https://github.com/wrabit/django-cotton-heroicons"
+documentation = "https://github.com/wrabit/django-cotton-heroicons#readme"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Framework :: Django",
+]
+keywords = ["django", "cotton", "heroicons", "svg", "icons"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+django-cotton = "*"
+
+[tool.poetry.dev-dependencies]
+black = "^21.5b1"
+isort = "^5.8.0"
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
