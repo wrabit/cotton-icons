@@ -5,7 +5,7 @@ A package to provide popular icon packs for use with [Django Cotton](https://git
 **1. Install from pypi**
 
 ```
-pip install django-icons
+pip install cotton-icons
 ```
 
 **2. Install into your django project**
@@ -13,7 +13,7 @@ pip install django-icons
 ```python
 # settings.py
 INSTALLED_APPS = [
-  'django_icons'
+  'cotton_icons'
 ]
 ```
 
