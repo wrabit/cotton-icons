@@ -1,5 +1,5 @@
 A package to provide popular icon packs for use with [Django Cotton](https://github.com/wrabit/django-cotton).
-Currently, [Heroicons](https://heroicons.com/) and [Tabler Icons](https://tabler-icons.io/) are supported.
+Currently, [Heroicons](https://heroicons.com/) and [Tabler Icons](https://tabler.io/icons) are supported.
 
 ## Supported Icon Libraries
 
