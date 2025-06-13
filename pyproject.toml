@@ -1,11 +1,11 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0,<2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "cotton-icons"
-version = "0.0.2"
-description = "Icons integration for django-cotton, starting with Heroicons"
+version = "0.1.0"
+description = "Heroicons and Tabler Icons for Django Cotton"
 authors = ["William Abbott <willabb83@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -13,7 +13,7 @@ homepage = "https://github.com/wrabit/cotton-icons"
 repository = "https://github.com/wrabit/cotton-icons"
 documentation = "https://github.com/wrabit/cotton-icons#readme"
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",

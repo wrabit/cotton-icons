@@ -1,0 +1,13 @@
+<c-vars variant="outline" stroke_width="2" stroke_linecap="round" stroke_linejoin="round" />
+
+{% if variant == 'outline' %}
+<svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 20h3"></path>
+<path d="M14 20h6"></path>
+<path d="M6.9 15h6.9"></path>
+<path d="M13 13l3 7"></path>
+<path d="M5 20l4.09 -10.906"></path>
+<path d="M10.181 6.183l.819 -2.183h2l3.904 8.924"></path>
+<path d="M3 3l18 18"></path>
+</svg>
+{% endif %}
