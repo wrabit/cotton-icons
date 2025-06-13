@@ -87,6 +87,7 @@ venv.bak/
 
 # hide "heroicons" directory relative to this file
 /heroicons/
+/tabler-icons-repo/
 
 # mypy
 .mypy_cache/

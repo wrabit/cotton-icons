@@ -1,0 +1,29 @@
+<c-vars variant="outline" stroke_width="2" stroke_linecap="round" stroke_linejoin="round" />
+
+{% if variant == 'outline' %}
+<svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 13h1"></path>
+<path d="M20 13h1"></path>
+<path d="M5.6 6.6l.7 .7"></path>
+<path d="M18.4 6.6l-.7 .7"></path>
+<path d="M8 13a4 4 0 1 1 8 0"></path>
+<path d="M3 17h18"></path>
+<path d="M7 20h5"></path>
+<path d="M16 20h1"></path>
+<path d="M12 5v-1"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'filled' %}
+<svg {{ attrs }} fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 12a1 1 0 0 1 0 2h-1a1 1 0 0 1 0 -2z"></path>
+<path d="M21 12a1 1 0 0 1 0 2h-1a1 1 0 0 1 0 -2z"></path>
+<path d="M6.307 5.893l.7 .7a1 1 0 0 1 -1.414 1.414l-.7 -.7a1 1 0 0 1 1.414 -1.414"></path>
+<path d="M19.107 5.893a1 1 0 0 1 0 1.414l-.7 .7a1 1 0 0 1 -1.414 -1.414l.7 -.7a1 1 0 0 1 1.414 0"></path>
+<path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 0 1 -2 0v-1a1 1 0 0 1 1 -1"></path>
+<path d="M3 16h18a1 1 0 0 1 0 2h-18a1 1 0 0 1 0 -2"></path>
+<path d="M12 8a5 5 0 0 1 4.583 7.002h-9.166a5 5 0 0 1 4.583 -7.002"></path>
+<path d="M12 19a1 1 0 0 1 0 2h-5a1 1 0 0 1 0 -2z"></path>
+<path d="M17 19a1 1 0 0 1 0 2h-1a1 1 0 0 1 0 -2z"></path>
+</svg>
+{% endif %}
