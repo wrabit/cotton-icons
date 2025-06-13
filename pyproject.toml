@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "cotton-icons"
-version = "0.2.0"
+version = "0.1.0"
 description = "Heroicons and Tabler Icons for Django Cotton"
 authors = ["William Abbott <willabb83@gmail.com>"]
 license = "MIT"
