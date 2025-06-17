@@ -25,11 +25,14 @@ INSTALLED_APPS = [
 
 **3. Use in template**
 
-`<c-heroicon.[kebab-case heroicon name] variant="outline|solid|mini" [any other attribute will pass to the <svg> tag] />`
+Heroicons:  
+`<c-heroicon.[kebab-case heroicon name] variant="outline|solid|mini" [any other attribute will pass to the <svg> tag] />`  
+
+Tabler Icons:  
 `<c-tablericon.[kebab-case tabler icon name] variant="outline|filled" [any other attribute will pass to the <svg> tag] />`
 
 * `variant` defaults to `outline`
-* for outline variant, you can also pass `stroke-width="" stroke_linecap="" stroke_linejoin=""` 
+* for outline variant, you can also pass `stroke-width="" stroke-linecap="" stroke-linejoin=""` 
 
 Examples:
    
