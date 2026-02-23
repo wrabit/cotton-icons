@@ -2,8 +2,8 @@
 
 {% if variant == 'outline' %}
 <svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<circle cx="12" cy="6" fill="currentColor" r="1"></circle>
-<circle cx="12" cy="18" fill="currentColor" r="1"></circle>
+<path d="M11 6a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" fill="currentColor"></path>
+<path d="M11 18a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" fill="currentColor"></path>
 <path d="M5 12l14 0"></path>
 </svg>
 {% endif %}
