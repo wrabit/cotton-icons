@@ -3,10 +3,17 @@
 {% if variant == 'outline' %}
 <svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
-<path d="M15 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-<path d="M9 17m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"></path>
+<path d="M14 17a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+<path d="M8 17a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
 <path d="M9 17l6 -6"></path>
 <path d="M15 17l-6 -6"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'filled' %}
+<svg {{ attrs }} fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm-2.293 9.293a1 1 0 1 0 -1.414 1.414l2.292 2.293l-1.068 1.067a2.003 2.003 0 0 0 -2.512 1.784l-.005 .149a2 2 0 1 0 3.933 -.516l1.067 -1.069l1.067 1.068a2 2 0 0 0 -.062 .368l-.005 .149a2 2 0 1 0 1.484 -1.933l-1.069 -1.067l2.292 -2.293a1 1 0 0 0 -1.414 -1.414l-2.293 2.292z"></path>
+<path d="M19 7h-4l-.001 -4.001z"></path>
 </svg>
 {% endif %}

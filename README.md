@@ -1,10 +1,11 @@
 A package to provide popular icon packs for use with [Django Cotton](https://github.com/wrabit/django-cotton).
-Currently, [Heroicons](https://heroicons.com/) and [Tabler Icons](https://tabler.io/icons) are supported.
+Currently, [Heroicons](https://heroicons.com/), [Tabler Icons](https://tabler.io/icons), and [Lucide Icons](https://lucide.dev/) are supported.
 
 ## Supported Icon Libraries
 
-*   **Heroicons:** `v2.1.5` 
-*   **Tabler Icons:** `v3.34.0` 
+*   **Heroicons:** `v2.2.0`
+*   **Tabler Icons:** `v3.37.1`
+*   **Lucide Icons:** `v0.575.0` 
 
 ## Install
 
@@ -25,30 +26,31 @@ INSTALLED_APPS = [
 
 **3. Use in template**
 
-Heroicons:  
-`<c-heroicon.[kebab-case heroicon name] variant="outline|solid|mini" [any other attribute will pass to the <svg> tag] />`  
+| Library | Syntax | Variants | Default |
+|---------|--------|----------|---------|
+| Heroicons | `<c-heroicon.icon-name />` | `outline`, `solid`, `mini`, `micro` | `outline` |
+| Tabler | `<c-tablericon.icon-name />` | `outline`, `filled` | `outline` |
+| Lucide | `<c-lucideicon.icon-name />` | - | - |
 
-Tabler Icons:  
-`<c-tablericon.[kebab-case tabler icon name] variant="outline|filled" [any other attribute will pass to the <svg> tag] />`
+All attributes pass through to the `<svg>` tag. For stroke-based icons you can also pass `stroke-width`, `stroke-linecap`, and `stroke-linejoin`.
 
-* `variant` defaults to `outline`
-* for outline variant, you can also pass `stroke-width="" stroke-linecap="" stroke-linejoin=""` 
+**Examples:**
 
-Examples:
-   
 ```html
-<c-heroicon.chevron-down class="size-5" /> <!-- default variant "outline" -->
+<c-heroicon.chevron-down class="size-5" />
 <c-heroicon.chevron-down variant="solid" class="size-5" />
 <c-heroicon.chevron-down variant="mini" class="size-5" />
-```
-   
-```html
-<c-tablericon.graph class="size-5" /> <!-- default variant "outline" -->
+
+<c-tablericon.graph class="size-5" />
 <c-tablericon.graph variant="filled" class="size-5" />
+
+<c-lucideicon.arrow-down class="size-5" />
+<c-lucideicon.search class="size-5" stroke-width="3" />
 ```
 
 ### Roadmap
 
 - [x] Add [Tabler Icons](https://tabler-icons.io/)
+- [x] Add [Lucide Icons](https://lucide.dev/)
 
 

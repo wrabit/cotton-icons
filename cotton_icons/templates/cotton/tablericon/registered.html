@@ -2,8 +2,14 @@
 
 {% if variant == 'outline' %}
 <svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+<path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
 <path d="M10 15v-6h2a2 2 0 1 1 0 4h-2"></path>
 <path d="M14 15l-2 -2"></path>
+</svg>
+{% endif %}
+
+{% if variant == 'filled' %}
+<svg {{ attrs }} fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-5 4.66h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1l.117 -.007a1 1 0 0 0 .883 -.993v-1h.585l1.708 1.707a1 1 0 0 0 1.414 -1.414l-.9 -.899a3 3 0 0 0 -1.807 -5.394m0 2a1 1 0 0 1 0 2h-1v-2z"></path>
 </svg>
 {% endif %}
