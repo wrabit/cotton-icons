@@ -54,9 +54,4 @@ Icons are treated as decorative and render with `aria-hidden="true"` by default.
 <c-lucideicon.search class="size-5" stroke-width="3" />
 ```
 
-### Roadmap
-
-- [x] Add [Tabler Icons](https://tabler-icons.io/)
-- [x] Add [Lucide Icons](https://lucide.dev/)
-
 
