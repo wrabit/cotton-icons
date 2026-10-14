@@ -1,54 +1,11 @@
 # generate_lucide.py
 import json
 import os
-import subprocess
-import shutil
 from bs4 import BeautifulSoup, Comment
-import sys
+
+from upstream import clone_release, reset_output_dir
 
 LUCIDE_REPO_NAME = "lucide-repo"  # Local directory name for the cloned repository
-
-
-def download_lucide_repo():
-    """Download the Lucide Icons repository from GitHub"""
-    print("Downloading Lucide Icons repository...")
-    repo_url = "https://github.com/lucide-icons/lucide.git"
-
-    if os.path.exists(LUCIDE_REPO_NAME):
-        print(f"Directory '{LUCIDE_REPO_NAME}' already exists. Removing it to get the latest version...")
-        shutil.rmtree(LUCIDE_REPO_NAME)
-
-    try:
-        subprocess.run(
-            ["git", "clone", "--depth", "1", repo_url, LUCIDE_REPO_NAME],
-            check=True, capture_output=True, text=True
-        )
-        print("Successfully downloaded Lucide Icons repository.")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error downloading Lucide Icons repository: {e}")
-        print(f"Git Stderr: {e.stderr}")
-        return False
-
-
-def get_version(repo_root_dir):
-    """Extract version from GitHub API releases (Lucide is a monorepo without version in root package.json)"""
-    import urllib.request
-    import re
-    try:
-        # Get the latest release from GitHub API
-        req = urllib.request.Request(
-            "https://api.github.com/repos/lucide-icons/lucide/releases/latest",
-            headers={"User-Agent": "cotton-icons"}
-        )
-        with urllib.request.urlopen(req, timeout=10) as response:
-            data = json.loads(response.read().decode())
-            tag = data.get("tag_name", "")
-            # Strip 'v' prefix if present
-            return tag.lstrip('v') if tag else "Unknown"
-    except Exception as e:
-        print(f"Warning: Could not get version from GitHub API: {e}")
-        return "Unknown"
 
 
 def process_svg_tag(svg_path):
@@ -106,23 +63,53 @@ def create_icon_template(svg_content):
     return "".join(template_parts).strip() + "\n"
 
 
-def generate_cotton_components(lucide_repo_root_dir, output_dir):
-    """Generate Cotton components from Lucide Icons"""
-    lucide_icons_path = os.path.join(lucide_repo_root_dir, "icons")
+def write_alias_templates(icons_path, output_dir, icon_names):
+    """Mirror Lucide's deprecated aliases as forwarding components.
+
+    Lucide records renamed and duplicate icons in each icon's JSON ``aliases``
+    and its packages re-export them with a deprecation notice, so old names
+    keep working. Each alias here is a template that proxies all attributes
+    to the real icon, so it renders identically.
+    """
+    namespace = os.path.basename(output_dir)
+    aliases = {}
+    for icon_name in icon_names:
+        meta_path = os.path.join(icons_path, f"{icon_name}.json")
+        if not os.path.exists(meta_path):
+            continue
+        with open(meta_path, encoding="utf-8") as f:
+            meta = json.load(f)
+        for alias in meta.get("aliases", []):
+            alias_name = alias["name"] if isinstance(alias, dict) else alias
+            if alias_name in icon_names:
+                print(f"Warning: alias {alias_name} of {icon_name} clashes with an icon, skipped")
+                continue
+            reason = alias.get("deprecationReason", "alias") if isinstance(alias, dict) else "alias"
+            aliases[alias_name] = icon_name
+            template = (
+                f"{{# Deprecated alias of {icon_name} ({reason}) #}}\n"
+                f'<c-{namespace}.{icon_name} :attrs="attrs" />\n'
+            )
+            with open(os.path.join(output_dir, f"{alias_name.replace('-', '_')}.html"), "w", encoding="utf-8") as f:
+                f.write(template)
+    return aliases
+
+
+def generate_cotton_components(lucide_repo_root_dir, output_dir, version, source="icons"):
+    """Generate Cotton components from a Lucide icon directory (``icons`` or ``lab``)"""
+    lucide_icons_path = os.path.join(lucide_repo_root_dir, source)
 
     if not os.path.isdir(lucide_icons_path):
         print(f"Error: Icons directory not found: {lucide_icons_path}")
         return
 
-    lucide_version = get_version(lucide_repo_root_dir)
-    print(f"Lucide Icons version detected: {lucide_version}")
-
     icon_map = {
-        'lucideicons_version': lucide_version,
+        'lucideicons_version': version,
+        'source': source,
         'icons': []
     }
 
-    os.makedirs(output_dir, exist_ok=True)
+    reset_output_dir(output_dir)
 
     # Collect all icon base names
     all_icon_base_names = set()
@@ -155,6 +142,9 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir):
 
     print(f"Generated {generated_count} icon templates for Lucide Icons in {output_dir}")
 
+    icon_map['aliases'] = write_alias_templates(lucide_icons_path, output_dir, set(icon_map['icons']))
+    print(f"Generated {len(icon_map['aliases'])} alias templates in {output_dir}")
+
     icon_map_path = os.path.join(output_dir, 'icon_map.json')
     try:
         with open(icon_map_path, 'w', encoding='utf-8') as f:
@@ -163,13 +153,12 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir):
     except Exception as e:
         print(f"Error writing icon map file {icon_map_path}: {e}")
 
-    print(f"Successfully processed Lucide Icons version: {lucide_version}")
+    print(f"Successfully processed Lucide Icons version: {version}")
 
 
 if __name__ == "__main__":
-    output_dir_lucide = "cotton_icons/templates/cotton/lucideicon"
-
-    if not download_lucide_repo():
-        sys.exit("Failed to download Lucide Icons repository. Exiting.")
-
-    generate_cotton_components(LUCIDE_REPO_NAME, output_dir_lucide)
+    tag = clone_release("lucide-icons/lucide", LUCIDE_REPO_NAME)
+    generate_cotton_components(LUCIDE_REPO_NAME, "cotton_icons/templates/cotton/lucideicon", version=tag)
+    # Lucide Lab moved into the main repo in 1.27.0; it ships as its own namespace
+    # so experimental icons are visible at the call site and can never shadow main ones.
+    generate_cotton_components(LUCIDE_REPO_NAME, "cotton_icons/templates/cotton/lucidelab", version=tag, source="lab")

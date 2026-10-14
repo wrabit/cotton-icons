@@ -1,11 +1,12 @@
 A package to provide popular icon packs for use with [Django Cotton](https://github.com/wrabit/django-cotton).
-Currently, [Heroicons](https://heroicons.com/), [Tabler Icons](https://tabler.io/icons), and [Lucide Icons](https://lucide.dev/) are supported.
+Currently, [Heroicons](https://heroicons.com/), [Tabler Icons](https://tabler.io/icons), [Lucide Icons](https://lucide.dev/) and [Lucide Lab](https://github.com/lucide-icons/lucide/tree/main/lab) are supported.
 
 ## Supported Icon Libraries
 
 *   **Heroicons:** `v2.2.0`
 *   **Tabler Icons:** `v3.37.1`
-*   **Lucide Icons:** `v0.575.0` 
+*   **Lucide Icons:** `v1.57.0`
+*   **Lucide Lab:** `v1.57.0`
 
 ## Install
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
 | Heroicons | `<c-heroicon.icon-name />` | `outline`, `solid`, `mini`, `micro` | `outline` |
 | Tabler | `<c-tablericon.icon-name />` | `outline`, `filled` | `outline` |
 | Lucide | `<c-lucideicon.icon-name />` | - | - |
+| Lucide Lab | `<c-lucidelab.icon-name />` | - | - |
 
 All attributes pass through to the `<svg>` tag. For stroke-based icons you can also pass `stroke-width`, `stroke-linecap`, and `stroke-linejoin`.
 
@@ -52,6 +54,12 @@ Icons are treated as decorative and render with `aria-hidden="true"` by default.
 
 <c-lucideicon.arrow-down class="size-5" />
 <c-lucideicon.search class="size-5" stroke-width="3" />
+
+<c-lucidelab.coconut class="size-5" />
 ```
+
+Lucide's deprecated aliases are included, so an icon that was renamed upstream still works under its old name, for example `<c-lucideicon.trash-2 />` renders `trash`. Aliases proxy to the real icon and may be dropped when Lucide removes them, so prefer the new name in new code. The alias list is in each set's `icon_map.json`.
+
+Lucide Lab holds experimental icons that may be renamed, removed or promoted into the main set between releases. They live in their own namespace so that is visible where you use them and so a lab icon can never shadow a main one.
 
 
