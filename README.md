@@ -8,6 +8,8 @@ Currently, [Heroicons](https://heroicons.com/), [Tabler Icons](https://tabler.io
 *   **Lucide Icons:** `v1.57.0`
 *   **Lucide Lab:** `v1.57.0`
 
+See the [changelog](CHANGELOG.md) for what changed in each release, including icon renames and removals.
+
 ## Install
 
 **1. Install from pypi**
