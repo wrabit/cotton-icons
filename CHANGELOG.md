@@ -2,7 +2,7 @@
 
 All notable changes to cotton-icons are listed here. Icon set versions refer to the upstream release the templates were generated from.
 
-## 0.3.0 (unreleased)
+## 0.3.0 - 2026-10-14
 
 ### Breaking
 
