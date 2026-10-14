@@ -78,9 +78,13 @@ def process_svg_tag(svg_path):
         del svg.attrs['height']
 
     # Add attrs placeholder for Cotton
+    # Icons are decorative by default; the hyphenated c-vars key lets a caller's
+    # aria-hidden="false" replace the default instead of duplicating the attribute.
+    svg.attrs.pop('aria-hidden', None)
     svg['attrs'] = ''
     svg_content = str(svg)
     svg_content = svg_content.replace('attrs=""', '{{ attrs }}')
+    svg_content = svg_content.replace('{{ attrs }}', '{{ attrs }} aria-hidden="{{ aria_hidden }}"')
 
     # Template common stroke presentation attributes
     svg_content = svg_content.replace('stroke-width="2"', 'stroke-width="{{ stroke_width }}"')
@@ -95,7 +99,7 @@ def create_icon_template(svg_content):
     template_parts = []
     # Lucide icons are stroke-based, similar to outline style
     template_parts.append(
-        '<c-vars stroke_width="2" stroke_linecap="round" stroke_linejoin="round" />\n\n'
+        '<c-vars stroke_width="2" stroke_linecap="round" stroke_linejoin="round" aria-hidden="true" />\n\n'
     )
     template_parts.append(svg_content + "\n")
 

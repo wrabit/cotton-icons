@@ -41,12 +41,16 @@ def process_svg_tag(svg_path):
         soup = BeautifulSoup(file, 'html.parser')
 
     svg = soup.find('svg')
+    # Icons are decorative by default; the hyphenated c-vars key lets a caller's
+    # aria-hidden="false" replace the default instead of duplicating the attribute.
+    svg.attrs.pop('aria-hidden', None)
     svg['attrs'] = ''  # Add Cotton-specific attribute placeholder
 
     svg_content = str(svg)
 
     # Replace attributes with template variables
     svg_content = svg_content.replace('attrs=""', '{{ attrs }}')
+    svg_content = svg_content.replace('{{ attrs }}', '{{ attrs }} aria-hidden="{{ aria_hidden }}"')
     svg_content = svg_content.replace('stroke-width="1.5"', 'stroke-width="{{ stroke_width }}"')
     svg_content = svg_content.replace('stroke-linecap="round"', 'stroke-linecap="{{ stroke_linecap }}"')
     svg_content = svg_content.replace('stroke-linejoin="round"', 'stroke-linejoin="{{ stroke_linejoin }}"')
@@ -59,7 +63,7 @@ def combine_icon_variants(icon_name, variants):
     template = ""
 
     # Add the Cotton variables for outline variant
-    template += """<c-vars variant="outline" stroke_width="1.5" stroke_linecap="round" stroke_linejoin="round" />\n\n"""
+    template += """<c-vars variant="outline" stroke_width="1.5" stroke_linecap="round" stroke_linejoin="round" aria-hidden="true" />\n\n"""
 
     # Add each variant with Django if statements
     for variant, content in variants.items():
