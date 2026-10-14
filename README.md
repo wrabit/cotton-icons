@@ -34,6 +34,12 @@ INSTALLED_APPS = [
 
 All attributes pass through to the `<svg>` tag. For stroke-based icons you can also pass `stroke-width`, `stroke-linecap`, and `stroke-linejoin`.
 
+Icons are treated as decorative and render with `aria-hidden="true"` by default. If an icon carries meaning on its own, override it and give it a label:
+
+```html
+<c-heroicon.magnifying-glass aria-hidden="false" aria-label="Search" />
+```
+
 **Examples:**
 
 ```html

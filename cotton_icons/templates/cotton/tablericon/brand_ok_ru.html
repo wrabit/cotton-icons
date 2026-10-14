@@ -1,7 +1,7 @@
-<c-vars variant="outline" stroke_width="2" stroke_linecap="round" stroke_linejoin="round" />
+<c-vars variant="outline" stroke_width="2" stroke_linecap="round" stroke_linejoin="round" aria-hidden="true" />
 
 {% if variant == 'outline' %}
-<svg {{ attrs }} fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg {{ attrs }} aria-hidden="{{ aria_hidden }}" fill="none" stroke="currentColor" stroke-linecap="{{ stroke_linecap }}" stroke-linejoin="{{ stroke_linejoin }}" stroke-width="{{ stroke_width }}" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
 <path d="M20 12c0 8 0 8 -8 8s-8 0 -8 -8s0 -8 8 -8s8 0 8 8"></path>
 <path d="M9.5 13c1.333 .667 3.667 .667 5 0"></path>
