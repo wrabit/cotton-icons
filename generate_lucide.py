@@ -63,9 +63,9 @@ def create_icon_template(svg_content):
     return "".join(template_parts).strip() + "\n"
 
 
-def generate_cotton_components(lucide_repo_root_dir, output_dir, version):
-    """Generate Cotton components from Lucide Icons"""
-    lucide_icons_path = os.path.join(lucide_repo_root_dir, "icons")
+def generate_cotton_components(lucide_repo_root_dir, output_dir, version, source="icons"):
+    """Generate Cotton components from a Lucide icon directory (``icons`` or ``lab``)"""
+    lucide_icons_path = os.path.join(lucide_repo_root_dir, source)
 
     if not os.path.isdir(lucide_icons_path):
         print(f"Error: Icons directory not found: {lucide_icons_path}")
@@ -73,6 +73,7 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir, version):
 
     icon_map = {
         'lucideicons_version': version,
+        'source': source,
         'icons': []
     }
 
@@ -121,7 +122,8 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir, version):
 
 
 if __name__ == "__main__":
-    output_dir_lucide = "cotton_icons/templates/cotton/lucideicon"
-
     tag = clone_release("lucide-icons/lucide", LUCIDE_REPO_NAME)
-    generate_cotton_components(LUCIDE_REPO_NAME, output_dir_lucide, version=tag)
+    generate_cotton_components(LUCIDE_REPO_NAME, "cotton_icons/templates/cotton/lucideicon", version=tag)
+    # Lucide Lab moved into the main repo in 1.27.0; it ships as its own namespace
+    # so experimental icons are visible at the call site and can never shadow main ones.
+    generate_cotton_components(LUCIDE_REPO_NAME, "cotton_icons/templates/cotton/lucidelab", version=tag, source="lab")
