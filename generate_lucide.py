@@ -1,54 +1,11 @@
 # generate_lucide.py
 import json
 import os
-import subprocess
-import shutil
 from bs4 import BeautifulSoup, Comment
-import sys
+
+from upstream import clone_release, reset_output_dir
 
 LUCIDE_REPO_NAME = "lucide-repo"  # Local directory name for the cloned repository
-
-
-def download_lucide_repo():
-    """Download the Lucide Icons repository from GitHub"""
-    print("Downloading Lucide Icons repository...")
-    repo_url = "https://github.com/lucide-icons/lucide.git"
-
-    if os.path.exists(LUCIDE_REPO_NAME):
-        print(f"Directory '{LUCIDE_REPO_NAME}' already exists. Removing it to get the latest version...")
-        shutil.rmtree(LUCIDE_REPO_NAME)
-
-    try:
-        subprocess.run(
-            ["git", "clone", "--depth", "1", repo_url, LUCIDE_REPO_NAME],
-            check=True, capture_output=True, text=True
-        )
-        print("Successfully downloaded Lucide Icons repository.")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error downloading Lucide Icons repository: {e}")
-        print(f"Git Stderr: {e.stderr}")
-        return False
-
-
-def get_version(repo_root_dir):
-    """Extract version from GitHub API releases (Lucide is a monorepo without version in root package.json)"""
-    import urllib.request
-    import re
-    try:
-        # Get the latest release from GitHub API
-        req = urllib.request.Request(
-            "https://api.github.com/repos/lucide-icons/lucide/releases/latest",
-            headers={"User-Agent": "cotton-icons"}
-        )
-        with urllib.request.urlopen(req, timeout=10) as response:
-            data = json.loads(response.read().decode())
-            tag = data.get("tag_name", "")
-            # Strip 'v' prefix if present
-            return tag.lstrip('v') if tag else "Unknown"
-    except Exception as e:
-        print(f"Warning: Could not get version from GitHub API: {e}")
-        return "Unknown"
 
 
 def process_svg_tag(svg_path):
@@ -106,7 +63,7 @@ def create_icon_template(svg_content):
     return "".join(template_parts).strip() + "\n"
 
 
-def generate_cotton_components(lucide_repo_root_dir, output_dir):
+def generate_cotton_components(lucide_repo_root_dir, output_dir, version):
     """Generate Cotton components from Lucide Icons"""
     lucide_icons_path = os.path.join(lucide_repo_root_dir, "icons")
 
@@ -114,15 +71,12 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir):
         print(f"Error: Icons directory not found: {lucide_icons_path}")
         return
 
-    lucide_version = get_version(lucide_repo_root_dir)
-    print(f"Lucide Icons version detected: {lucide_version}")
-
     icon_map = {
-        'lucideicons_version': lucide_version,
+        'lucideicons_version': version,
         'icons': []
     }
 
-    os.makedirs(output_dir, exist_ok=True)
+    reset_output_dir(output_dir)
 
     # Collect all icon base names
     all_icon_base_names = set()
@@ -163,13 +117,11 @@ def generate_cotton_components(lucide_repo_root_dir, output_dir):
     except Exception as e:
         print(f"Error writing icon map file {icon_map_path}: {e}")
 
-    print(f"Successfully processed Lucide Icons version: {lucide_version}")
+    print(f"Successfully processed Lucide Icons version: {version}")
 
 
 if __name__ == "__main__":
     output_dir_lucide = "cotton_icons/templates/cotton/lucideicon"
 
-    if not download_lucide_repo():
-        sys.exit("Failed to download Lucide Icons repository. Exiting.")
-
-    generate_cotton_components(LUCIDE_REPO_NAME, output_dir_lucide)
+    tag = clone_release("lucide-icons/lucide", LUCIDE_REPO_NAME)
+    generate_cotton_components(LUCIDE_REPO_NAME, output_dir_lucide, version=tag)

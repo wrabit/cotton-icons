@@ -1,38 +1,8 @@
 import json
 import os
-import subprocess
-import shutil
 from bs4 import BeautifulSoup
-import sys
 
-
-def download_heroicons_repo():
-    """Download the Heroicons repository from GitHub"""
-    print("Downloading Heroicons repository...")
-
-    # Check if the heroicons directory already exists
-    if os.path.exists("heroicons"):
-        print("Heroicons directory already exists. Removing it to get the latest version...")
-        shutil.rmtree("heroicons")
-
-    # Clone the repository
-    try:
-        subprocess.run(
-            ["git", "clone", "https://github.com/tailwindlabs/heroicons.git"],
-            check=True
-        )
-        print("Successfully downloaded Heroicons repository.")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error downloading Heroicons repository: {e}")
-        return False
-
-def get_version(heroicons_dir):
-    """Extract heroicons version from package.json"""
-    package_json_path = os.path.join(heroicons_dir, '..', 'package.json')
-    with open(package_json_path, 'r') as f:
-        package_data = json.load(f)
-    return package_data.get('version', 'Unknown')
+from upstream import clone_release, reset_output_dir
 
 
 def process_svg_tag(svg_path):
@@ -74,7 +44,7 @@ def combine_icon_variants(icon_name, variants):
     return template
 
 
-def generate_cotton_components(heroicons_dir, output_dir):
+def generate_cotton_components(heroicons_dir, output_dir, version):
     """Generate combined Cotton components from Heroicons"""
     # Define style mappings
     styles = {
@@ -84,18 +54,14 @@ def generate_cotton_components(heroicons_dir, output_dir):
         'micro': {'source': '16/solid'}
     }
 
-    # Get heroicons version
-    heroicons_version = get_version(heroicons_dir)
-
     # Create icon map for metadata
     icon_map = {
-        'heroicons_version': heroicons_version,
+        'heroicons_version': version,
         'styles': styles,
         'icons': []
     }
 
-    # Create combined output directory
-    os.makedirs(output_dir, exist_ok=True)
+    reset_output_dir(output_dir)
 
     # First, collect all icon names from all styles
     all_icons = set()
@@ -142,9 +108,5 @@ if __name__ == "__main__":
     heroicons_dir = "heroicons/optimized"
     output_dir = "cotton_icons/templates/cotton/heroicon"
 
-    # Download heroicons repository
-    if not download_heroicons_repo():
-        sys.exit("Failed to download Heroicons repository. Exiting.")
-
-    # Generate components
-    generate_cotton_components(heroicons_dir, output_dir)
+    tag = clone_release("tailwindlabs/heroicons", "heroicons")
+    generate_cotton_components(heroicons_dir, output_dir, version=tag.lstrip("v"))

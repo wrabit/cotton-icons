@@ -1,47 +1,11 @@
 # generate_tabler.py
 import json
 import os
-import subprocess
-import shutil
 from bs4 import BeautifulSoup, Comment
-import sys
+
+from upstream import clone_release, reset_output_dir
 
 TABLER_REPO_NAME = "tabler-icons-repo" # Local directory name for the cloned repository
-
-def download_tabler_repo():
-    """Download the Tabler Icons repository from GitHub"""
-    print("Downloading Tabler Icons repository...")
-    repo_url = "https://github.com/tabler/tabler-icons.git"
-
-    if os.path.exists(TABLER_REPO_NAME):
-        print(f"Directory '{TABLER_REPO_NAME}' already exists. Removing it to get the latest version...")
-        shutil.rmtree(TABLER_REPO_NAME)
-
-    try:
-        subprocess.run(
-            ["git", "clone", "--depth", "1", repo_url, TABLER_REPO_NAME],
-            check=True, capture_output=True, text=True
-        )
-        print("Successfully downloaded Tabler Icons repository.")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error downloading Tabler Icons repository: {e}")
-        print(f"Git Stderr: {e.stderr}")
-        return False
-
-def get_version(repo_root_dir):
-    """Extract version from package.json"""
-    package_json_path = os.path.join(repo_root_dir, 'package.json')
-    try:
-        with open(package_json_path, 'r', encoding='utf-8') as f:
-            package_data = json.load(f)
-        return package_data.get('version', 'Unknown')
-    except FileNotFoundError:
-        print(f"Warning: package.json not found at {package_json_path}. Version will be 'Unknown'.")
-        return "Unknown"
-    except json.JSONDecodeError:
-        print(f"Warning: Could not parse package.json at {package_json_path}. Version will be 'Unknown'.")
-        return "Unknown"
 
 def process_svg_tag(svg_path, variant_name): # variant_name is kept for potential future use but not used for this logic
     """Extract and process SVG content from a file for Tabler Icons"""
@@ -123,23 +87,20 @@ def get_filled_svg_filename(basename, filled_dir_path):
     return None
 
 
-def generate_cotton_components(tabler_repo_root_dir, output_dir):
+def generate_cotton_components(tabler_repo_root_dir, output_dir, version):
     """Generate combined Cotton components from Tabler Icons"""
     tabler_icons_base_svg_path = os.path.join(tabler_repo_root_dir, "icons")
 
     outline_dir = os.path.join(tabler_icons_base_svg_path, 'outline')
     filled_dir = os.path.join(tabler_icons_base_svg_path, 'filled')
 
-    tabler_version = get_version(tabler_repo_root_dir)
-    print(f"Tabler Icons version detected: {tabler_version}")
-
     icon_map = {
-        'tablericons_version': tabler_version,
+        'tablericons_version': version,
         'styles_source_subdirs': {'outline': 'outline', 'filled': 'filled'},
         'icons': []
     }
 
-    os.makedirs(output_dir, exist_ok=True)
+    reset_output_dir(output_dir)
 
     all_icon_base_names = set()
     if os.path.isdir(outline_dir):
@@ -204,13 +165,11 @@ def generate_cotton_components(tabler_repo_root_dir, output_dir):
     except Exception as e:
         print(f"Error writing icon map file {icon_map_path}: {e}")
 
-    print(f"Successfully processed Tabler Icons version: {tabler_version}")
+    print(f"Successfully processed Tabler Icons version: {version}")
 
 
 if __name__ == "__main__":
     output_dir_tabler = "cotton_icons/templates/cotton/tablericon"
 
-    if not download_tabler_repo():
-        sys.exit("Failed to download Tabler Icons repository. Exiting.")
-
-    generate_cotton_components(TABLER_REPO_NAME, output_dir_tabler)
+    tag = clone_release("tabler/tabler-icons", TABLER_REPO_NAME)
+    generate_cotton_components(TABLER_REPO_NAME, output_dir_tabler, version=tag.lstrip("v"))
