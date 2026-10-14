@@ -58,6 +58,8 @@ Icons are treated as decorative and render with `aria-hidden="true"` by default.
 <c-lucidelab.coconut class="size-5" />
 ```
 
+Lucide's deprecated aliases are included, so an icon that was renamed upstream still works under its old name, for example `<c-lucideicon.trash-2 />` renders `trash`. Aliases proxy to the real icon and may be dropped when Lucide removes them, so prefer the new name in new code. The alias list is in each set's `icon_map.json`.
+
 Lucide Lab holds experimental icons that may be renamed, removed or promoted into the main set between releases. They live in their own namespace so that is visible where you use them and so a lab icon can never shadow a main one.
 
 
